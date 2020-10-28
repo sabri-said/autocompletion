@@ -1,0 +1,19 @@
+{
+  "name": "vendor_name/autocompletion",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "sabri",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "ext-pdo": "*",
+    "fzaninotto/faker": "v1.9.1",
+    "symfony/panther": "v0.8.0",
+    "symfony/var-dumper": "v5.1.7",
+    "ext-json": "*"
+  }
+}
