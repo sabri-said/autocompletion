@@ -30,8 +30,10 @@ if (!isset($_GET['id']) || $_GET['id'] == '') {
 <body>
 <header>
     <nav class="navbar navbar-light bg-light">
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" id="searchBar" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline" method="GET" id="searchEngineForm">
+            <input aria-label="Search" class="form-control mr-sm-2" id="searchBar" name="search-bar"
+                   placeholder="Rechercher"
+                   type="text">
         </form>
     </nav>
     <div class="row position-relative" id="rowResultList">
@@ -58,7 +60,7 @@ if (!isset($_GET['id']) || $_GET['id'] == '') {
                         <li class="list-group-item">
                             Nom: <?= $idResult->name; ?>
                         </li>
-                        <?php
+                    <?php
                     endforeach; ?>
                 </ul>
             </div>

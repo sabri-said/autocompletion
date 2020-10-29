@@ -1,22 +1,45 @@
 let searchBar = document.getElementById('searchBar');
-let searchBtn = document.getElementById('searchBtn');
-let rowForm = document.getElementById('rowForm');
 let listGroupResult = document.getElementById('listGroupResult');
+let searchEngineForm = document.getElementById('searchEngineForm');
+
+
+
+searchEngineForm.addEventListener('submit', function(ev) {
+  ev.preventDefault();
+
+  let xhrUrlParams = `search-bar=${encodeURIComponent(searchBar.value)}`;
+  xhr('search_engine.php?', xhrUrlParams, response => {
+    window.location.href = `../recherche.php?search=${encodeURIComponent(
+        searchBar.value)}`;
+  });
+
+});
+
+
 
 searchBar.addEventListener('input', function(ev) {
+
   while (listGroupResult.firstElementChild) {
     listGroupResult.removeChild(listGroupResult.firstElementChild);
   }
-  let getParams = `search-bar=${encodeURIComponent(this.value)}`;
-  xhr('search_engine.php?', getParams, response => {
-    if (Object.keys(response).length >= 1) {
+
+  let xhrUrlParams = `search-bar=${encodeURIComponent(this.value)}`;
+
+  xhr('search_engine.php?', xhrUrlParams, response => {
+
+    if (Object.keys(response).length > 0) {
       for (let responseElement of response) {
         let bsListItemElement = document.createElement('li');
-        listGroupResult.style.maxHeight = '30vh';
-        listGroupResult.style.overflowY = 'scroll';
         bsListItemElement.classList.add('list-group-item');
         bsListItemElement.textContent = responseElement.name;
         listGroupResult.append(bsListItemElement);
+
+        if (listGroupResult.childElementCount > 8) {
+          listGroupResult.style.maxHeight = '30vh';
+          listGroupResult.style.overflowY = 'scroll';
+        } else {
+          listGroupResult.style.overflowY = null;
+        }
 
         function activeListItem(ev) {
           if (!this.classList.contains('active')) {
@@ -25,9 +48,8 @@ searchBar.addEventListener('input', function(ev) {
           }
 
           function openElementList(ev) {
-            console.log(
-                window.location.href = `../recherche.php?search=${encodeURIComponent(
-                    searchBar.value)}`);
+            window.location.href = `../recherche.php?search=${encodeURIComponent(
+                searchBar.value)}`;
           }
         }
 
@@ -38,7 +60,7 @@ searchBar.addEventListener('input', function(ev) {
         }
 
         bsListItemElement.addEventListener('mouseover', activeListItem);
-        bsListItemElement.addEventListener('mouseout', deactiveListItem);
+        bsListItemElement.addEventListener('mouseleave', deactiveListItem);
 
       }
     }
@@ -53,7 +75,7 @@ searchBar.addEventListener('input', function(ev) {
  * @param {string} params
  * @param {xhrCallback} callback
  */
-function xhr(url, params, callback) {
+function xhr(url, params, callback = null) {
   let xhr = new XMLHttpRequest();
 
   xhr.onload = function(evOnLoad) {

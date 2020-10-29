@@ -21,7 +21,7 @@
     <div class="container min-vh-100 d-flex flex-column justify-content-center">
         <div class="row justify-content-center" id="rowForm">
             <div class="col-9">
-                <form action="search_engine.php" method="GET">
+                <form action="search_engine.php" method="GET" id="searchEngineForm">
                     <div class="form-group">
                         <label class="text-light" for="searchBar">Entrez votre recherche</label>
                         <input class="form-control" id="searchBar" name="search-bar" type="text">
